@@ -1,10 +1,11 @@
 import React from "react";
 
 const About = () => {
+
   const cards = [
     {
       title: "🎯 Why MonetizeIQ?",
-      color: "from-pink-500 to-indigo-500", 
+ 
       accent: "text-pink-600",
       points: [
         "📊 Get real-time analytics of your YouTube performance.",
@@ -15,7 +16,6 @@ const About = () => {
     },
     {
       title: "💡 Empowering Creators",
-      color: "from-indigo-500 to-pink-500",
       accent: "text-indigo-600",
       points: [
         "🤖 AI-based tools to enhance your YouTube strategies.",
@@ -28,7 +28,7 @@ const About = () => {
 
   return (
     <section className="flex flex-col items-center justify-center py-16 px-6">
-      <div className="max-w-6xl w-full flex flex-col md:flex-row justify-between items-center gap-10">
+      <div className="2xl:max-w-6xl max-w-4xl w-full flex flex-col md:flex-row justify-between items-center gap-10">
         {cards.map((card, index) => (
           <div
             key={index}
@@ -36,7 +36,7 @@ const About = () => {
               group relative w-full md:w-1/2 rounded-3xl p-8 shadow-md 
               bg-white border border-pink-200 transition-all duration-500 
               hover:scale-105 hover:shadow-2xl hover:text-white 
-              hover:bg-linear-to-br hover:${card.color}
+              hover:bg-linear-to-br from-indigo-500 to-pink-500
             `}
           >
             <div className="relative z-10">
