@@ -1,36 +1,23 @@
 import { useState } from "react";
 import About from "../components/About/About";
 import { TypeAnimation } from "react-type-animation";
+import { useDispatch} from "react-redux";
+import { fetchChannelName } from '../app/features/channelNameSlice';
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
-  const [inputLink, setInputLink] = useState({
-    userLink: "",
-    competitorLink: "",
-  });
 
-  const inputTag = [
-    {
-      name: "userLink",
-      placeholder: "Enter your YouTube channel link",
-      bgGradient:
-        "focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 transition duration-200",
-    },
-    {
-      name: "competitorLink",
-      placeholder: "Enter competitor’s YouTube channel link",
-      bgGradient:
-        "focus:outline-none focus:ring-2 focus:ring-fuchsia-400 focus:border-fuchsia-400 transition duration-200",
-    },
-  ];
-
+const dispatch=useDispatch()
+  const [inputLink, setInputLink] = useState("");
+  const navigate=useNavigate()
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setInputLink((prev) => ({ ...prev, [name]: value }));
+    setInputLink(e.target.value);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(inputLink);
+  dispatch(fetchChannelName(inputLink))
+  navigate('/dashboard')
   };
 
   return (
@@ -66,21 +53,22 @@ const Home = () => {
   <form
     onSubmit={handleSubmit}
     className="grid grid-cols-1 md:grid-cols-2 gap-6 p-8 rounded-3xl text-sm
-               bg-gradient-to-b from-[#f8fafc] via-[#f1f5f9] to-[#e2e8f0]
+               bg-gradient-to-b from-[#f8fafc] via-[#f1f5f9]focus:outline-none focus:ring-2 focus:ring-indigo-400
+             focus:border-indigo-400 transition duration-200 to-[#e2e8f0]
                shadow-xl border border-gray-300 backdrop-blur-md lg:h-50 md:h-44"
   >
-    {inputTag.map((item, i) => (
-      <input
-        key={i}
-        name={item.name}
-        type="text"
-        placeholder={item.placeholder}
-        onChange={handleChange}
-        className={`p-4 rounded-xl border border-gray-300 bg-[#f8fafc] text-gray-800 
-                     placeholder-gray-500 shadow-sm ${item.bgGradient} h-10 lg:h-13 
-                     focus:bg-white focus:border-indigo-400 transition duration-200`}
-      />
-    ))}
+<input
+  name="userLink"
+  type="text"
+  placeholder="Enter your YouTube channel link"
+  required
+  onChange={handleChange}
+  className="md:col-span-2 py-3 px-6 rounded-xl border border-gray-300 bg-[#f8fafc] text-gray-800 
+             placeholder-gray-500 shadow-sm h-11 lg:h-13 
+             focus:outline-none focus:ring-2 focus:ring-indigo-400 
+             focus:border-indigo-400 transition duration-200 focus:bg-white"
+/>
+
 
     <button
       type="submit"
@@ -96,6 +84,9 @@ const Home = () => {
         {/* About Section */}
         <About />
       </main>
+
+    
+
     </div>
   );
 };

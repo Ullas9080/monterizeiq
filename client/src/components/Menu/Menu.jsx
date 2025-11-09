@@ -3,7 +3,7 @@ import { FaHistory } from "react-icons/fa";
 import { CiSettings } from "react-icons/ci";
 import { IoMdHome } from "react-icons/io";
 import { Link, useLocation } from "react-router-dom";
-import { icons } from "lucide-react";
+
 
 const Menu = () => {
   const location = useLocation();
@@ -11,7 +11,6 @@ const Menu = () => {
   const menuItems = [
     {icon:<IoMdHome/>,label:"Home",link:"/"},
     { icon: <MdDashboard />, label: "Dashboard", link: "/DashBoard" },
-    { icon: <FaHistory />, label: "History", link: "/History" },
     { icon: <CiSettings />, label: "Settings", link: "/Settings" },
   ];
 
