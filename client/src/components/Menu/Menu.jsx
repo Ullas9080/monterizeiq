@@ -32,7 +32,7 @@ export default function Menu() {
 
       {/* Sidebar for large screens */}
       <div className="hidden md:flex flex-col fixed left-0 top-0 h-full w-64
-                      bg-gradient-to-br from-white/80 via-pink-50/70 to-white/60
+                      bg-linear-to-br from-white/80 via-pink-50/70 to-white/60
                       backdrop-blur-xl p-6 rounded-tr-3xl rounded-br-3xl
                       shadow-2xl border border-pink-100/60">
         <SidebarContent location={location} />
@@ -47,7 +47,7 @@ export default function Menu() {
           ></div>
 
           <div className="relative z-50 w-56 
-                          bg-gradient-to-br from-white/80 via-pink-50/70 to-white/60
+                          bg-linear-to-br from-white/80 via-pink-50/70 to-white/60
                           backdrop-blur-xl shadow-2xl h-full p-6 animate-slideIn
                           rounded-r-3xl border border-pink-100/60">
             <SidebarContent location={location} toggleMenu={() => setOpen(false)} />
@@ -85,14 +85,14 @@ function SidebarContent({ location, toggleMenu }) {
                 relative flex items-center gap-3 p-4 rounded-3xl
                 transition-all duration-300
                 ${active
-                  ? "bg-gradient-to-br from-pink-400 to-fuchsia-500 text-white font-semibold shadow-lg"
-                  : "bg-white/70 hover:bg-gradient-to-br hover:from-pink-50/70 hover:via-pink-100/50 hover:to-white/60 text-gray-700 hover:text-pink-600 hover:shadow-md"}
+                  ? "bg-linear-to-br from-pink-400 to-fuchsia-500 text-white font-semibold shadow-lg"
+                  : "bg-white/70 hover:bg-linear-to-br hover:from-pink-50/70 hover:via-pink-100/50 hover:to-white/60 text-gray-700 hover:text-pink-600 hover:shadow-md"}
               `}
             >
               {/* Accent vertical line */}
               <span
                 className={`absolute left-0 top-0 h-full w-1 rounded-l-3xl
-                            ${active ? "bg-gradient-to-b from-pink-400 to-fuchsia-500" : "bg-pink-200/50"}`}
+                            ${active ? "bg-linear-to-b from-pink-400 to-fuchsia-500" : "bg-pink-200/50"}`}
               ></span>
 
               {item.icon}
@@ -107,7 +107,7 @@ function SidebarContent({ location, toggleMenu }) {
       {/* Logout */}
       <button className="flex items-center justify-center gap-2 px-4 py-3 
                          bg-white/70 text-pink-600 rounded-3xl 
-                         hover:bg-gradient-to-br hover:from-pink-50/70 hover:via-pink-100/50 hover:to-white/60
+                         hover:bg-linear-to-br hover:from-pink-50/70 hover:via-pink-100/50 hover:to-white/60
                          hover:shadow-md transition-all text-lg font-medium">
         <IoLogOutOutline size={16} />
         Logout

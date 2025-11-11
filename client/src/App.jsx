@@ -13,9 +13,6 @@ const App = () => {
    <div className="md:flex-1 md:ml-64 p-4">
     <AppRouters />
   </div>
-   
-
-    
      </div>
 
    

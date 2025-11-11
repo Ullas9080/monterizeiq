@@ -59,12 +59,12 @@ const ChannelDetail = () => {
         >
           {/* Gradient overlay */}
           <div
-            className={`absolute inset-0 bg-gradient-to-br ${card.gradient} opacity-0 group-hover:opacity-15 transition-opacity duration-500`}
+            className={`absolute inset-0 bg-linear-to-br ${card.gradient} opacity-0 group-hover:opacity-15 transition-opacity duration-500`}
           ></div>
 
           {/* Accent bar */}
           <div
-            className={`absolute left-0 top-0 h-full w-1 bg-gradient-to-b ${card.gradient} rounded-l-2xl transition-all duration-500 group-hover:w-2`}
+            className={`absolute left-0 top-0 h-full w-1 bg-linear-to-b ${card.gradient} rounded-l-2xl transition-all duration-500 group-hover:w-2`}
           ></div>
 
           {/* Card content */}
