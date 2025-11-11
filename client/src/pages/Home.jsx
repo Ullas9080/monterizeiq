@@ -1,92 +1,95 @@
 import { useState } from "react";
 import About from "../components/About/About";
 import { TypeAnimation } from "react-type-animation";
-import { useDispatch} from "react-redux";
-import { fetchChannelName } from '../app/features/channelNameSlice';
+import { useDispatch } from "react-redux";
+import { fetchChannelName } from "../app/features/channelNameSlice";
 import { useNavigate } from "react-router-dom";
 
 const Home = () => {
-
-const dispatch=useDispatch()
+  const dispatch = useDispatch();
   const [inputLink, setInputLink] = useState("");
-  const navigate=useNavigate()
-  const handleChange = (e) => {
-    setInputLink(e.target.value);
-  };
+  const navigate = useNavigate();
+  const handleChange = (e) => setInputLink(e.target.value);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-  dispatch(fetchChannelName(inputLink))
-  navigate('/dashboard')
+    dispatch(fetchChannelName(inputLink));
+    navigate("/channelList");
   };
 
   return (
-    <div className="relative min-h-screen overflow-hidden">
+    <div className="flex flex-col min-h-screen w-full overflow-hidden relative">
 
-     
 
-      <nav className="flex justify-start p-4 ">
-        <img src="/src/assets/logo.svg" alt="Logo" className="35 md:w-50 lg:w-64" />
+      <nav className="flex items-center justify-start p-4 w-full bg-transparent z-10 ml-4">
+        <img
+          src="/src/assets/logo.svg"
+          alt="Logo"
+          className="w-32 sm:w-40 md:w-48 drop-shadow-md hover:scale-105 transition-transform duration-300"
+        />
       </nav>
 
-      {/* Animated Heading */}
-      <TypeAnimation
-        sequence={[
-          "AI-Powered Insights for Creators",
-          1000,
-          "Create Smarter with Data",
-          1000,
-          "Turn Analytics into Action",
-          1000,
-          "Your YouTube Success Starts Here",
-          1000,
-        ]}
-        wrapper="span"
-        speed={50}
-        className="flex justify-center text-pink-500 font-semibold text-2xl sm:text-3xl md:text-2xl lg:text-4xl"
-        repeat={Infinity}
-      />
-
-      {/* Main Form Section */}
-      <main>
- <div className="w-full sm:max-w-md md:max-w-lg lg:max-w-2xl 2xl:max-w-3xl mx-auto mt-6 md:mt-8 lg:mt-12">
-  <form
-    onSubmit={handleSubmit}
-    className="grid grid-cols-1 md:grid-cols-2 gap-6 p-8 rounded-3xl text-sm
-               bg-gradient-to-b from-[#f8fafc] via-[#f1f5f9]focus:outline-none focus:ring-2 focus:ring-indigo-400
-             focus:border-indigo-400 transition duration-200 to-[#e2e8f0]
-               shadow-xl border border-gray-300 backdrop-blur-md lg:h-50 md:h-44"
-  >
-<input
-  name="userLink"
-  type="text"
-  placeholder="Enter your YouTube channel link"
-  required
-  onChange={handleChange}
-  className="md:col-span-2 py-3 px-6 rounded-xl border border-gray-300 bg-[#f8fafc] text-gray-800 
-             placeholder-gray-500 shadow-sm h-11 lg:h-13 
-             focus:outline-none focus:ring-2 focus:ring-indigo-400 
-             focus:border-indigo-400 transition duration-200 focus:bg-white"
-/>
+      <div className="flex flex-col items-center justify-center grow px-6 text-center space-y-10 relative z-10">
+        <TypeAnimation
+          sequence={[
+            "AI-Powered Insights for Creators",
+            1200,
+            "Create Smarter with Data",
+            1200,
+            "Turn Analytics into Action",
+            1200,
+            "Your YouTube Success Starts Here",
+            1200,
+          ]}
+          wrapper="span"
+          speed={40}
+          className="bg-linear-to-r from-pink-500 via-fuchsia-500 to-indigo-500 bg-clip-text text-transparent 
+                     font-semibold text-2xl sm:text-3xl md:text-4xl drop-shadow-sm"
+          repeat={Infinity}
+        />
 
 
-    <button
-      type="submit"
-      className="md:col-span-2 py-3 px-6 rounded-xl bg-gradient-to-r from-indigo-500 via-purple-500 to-fuchsia-500 
-                 text-white font-semibold shadow-md hover:shadow-lg hover:scale-105 
-                 transition-transform duration-200 h-11 lg:h-13 text-md"
-    >
-      Show Result
-    </button>
-  </form>
-</div>
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col md:flex-row items-center gap-4 w-full max-w-2xl 
+                     backdrop-blur-xl bg-white/60 border border-pink-100/60 
+                     shadow-2xl rounded-2xl p-6 
+                     transition-all duration-300 hover:shadow-[0_8px_30px_rgba(240,100,200,0.12)]"
+        >
+          <input
+            name="userLink"
+            type="text"
+            placeholder="Paste your YouTube channel link here..."
+            required
+            onChange={handleChange}
+            className="flex-1 w-full py-3 px-5 rounded-lg border border-pink-100 
+                       bg-white/70 text-gray-800 placeholder-gray-500 
+                       focus:outline-none focus:ring-2 focus:ring-fuchsia-400 
+                       transition duration-200"
+          />
 
-        {/* About Section */}
+          <button
+            type="submit"
+            className="w-full md:w-auto py-3 px-8 rounded-xl font-semibold text-white 
+                       bg-linear-to-r from-pink-500 via-fuchsia-500 to-indigo-500 
+                       shadow-md hover:shadow-lg hover:scale-105 
+                       transition-transform duration-200"
+          >
+            Show Result
+          </button>
+        </form>
+      </div>
+
+      {/* About Section */}
+      <div className="relative z-10">
         <About />
-      </main>
+      </div>
 
-    
-
+      {/* Footer */}
+      <footer className="text-center py-6 text-sm text-gray-600 relative z-10">
+        © {new Date().getFullYear()}{" "}
+        <span className="text-fuchsia-500 font-medium">MonterizeIQ</span> — Empowering YouTube Growth 🚀
+      </footer>
     </div>
   );
 };

@@ -1,7 +1,5 @@
 import { BrowserRouter as Router } from "react-router-dom"
 import Menu from "./components/Menu/Menu"
-import Home from "./pages/Home"
-import DashBoard from "./pages/DashBoard"
 import AppRouters from "./AppRouters/AppRouters"
 
 const App = () => {
@@ -10,14 +8,16 @@ const App = () => {
 
   return (
   <Router>
-      <aside className="hidden md:block fade-in">
-        <Menu />
-        
-      </aside>
+     <div>
+    <Menu />
+   <div className="md:flex-1 md:ml-64 p-4">
+    <AppRouters />
+  </div>
    
-      <main className="md:ml-50 lg:ml-64 flex-1 ">
-     <AppRouters/>
-      </main>
+
+    
+     </div>
+
    
     </Router>
   )

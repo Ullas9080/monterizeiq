@@ -1,74 +1,117 @@
-import { MdDashboard } from "react-icons/md";
-import { FaHistory } from "react-icons/fa";
-import { CiSettings } from "react-icons/ci";
-import { IoMdHome } from "react-icons/io";
+import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { IoMdHome } from "react-icons/io";
+import { MdDashboard } from "react-icons/md";
+import { CiSettings } from "react-icons/ci";
+import { IoLogOutOutline } from "react-icons/io5";
 
+const menuItems = [
+  { icon: <IoMdHome size={16} />, label: "Home", link: "/" },
+  { icon: <MdDashboard size={16} />, label: "Dashboard", link: "/Dashboard" },
+  { icon: <CiSettings size={16} />, label: "Settings", link: "/Settings" },
+];
 
-const Menu = () => {
+export default function Menu() {
+  const [open, setOpen] = useState(false);
   const location = useLocation();
 
-  const menuItems = [
-    {icon:<IoMdHome/>,label:"Home",link:"/"},
-    { icon: <MdDashboard />, label: "Dashboard", link: "/DashBoard" },
-    { icon: <CiSettings />, label: "Settings", link: "/Settings" },
-  ];
-
   return (
-    <div
-      className="fixed left-0 top-0 h-screen text-white
-                 w-50 lg:w-64 flex flex-col items-center 
-                 bg-gradient-to-bl from-indigo-600 via-purple-600 to-fuchsia-600
-                 shadow-lg shadow-fuchsia-800/20 border-r border-white/10 z-30"
-    >
+    <>
+      {/* Floating arrow toggle */}
+      <button
+        onClick={() => setOpen(!open)}
+        className={`
+          fixed top-1/2 z-50 text-2xl md:hidden
+          transform -translate-y-1/2 transition-all duration-300
+          ${open ? "left-56" : "left-2"} 
+          animate-bounce-slow text-gray-700 hover:text-pink-600
+        `}
+      >
+        {open ? "<" : ">"}
+      </button>
+
+      {/* Sidebar for large screens */}
+      <div className="hidden md:flex flex-col fixed left-0 top-0 h-full w-64
+                      bg-gradient-to-br from-white/80 via-pink-50/70 to-white/60
+                      backdrop-blur-xl p-6 rounded-tr-3xl rounded-br-3xl
+                      shadow-2xl border border-pink-100/60">
+        <SidebarContent location={location} />
+      </div>
+
+      {/* Overlay sidebar for small screens */}
+      {open && (
+        <div className="fixed inset-0 z-40 flex md:hidden">
+          <div
+            className="absolute inset-0 bg-black/30"
+            onClick={() => setOpen(false)}
+          ></div>
+
+          <div className="relative z-50 w-56 
+                          bg-gradient-to-br from-white/80 via-pink-50/70 to-white/60
+                          backdrop-blur-xl shadow-2xl h-full p-6 animate-slideIn
+                          rounded-r-3xl border border-pink-100/60">
+            <SidebarContent location={location} toggleMenu={() => setOpen(false)} />
+          </div>
+        </div>
+      )}
+    </>
+  );
+}
+
+/* Sidebar content */
+function SidebarContent({ location, toggleMenu }) {
+  return (
+    <div className="flex flex-col h-full">
       {/* Logo */}
-      <div className="lg:mt-10 mt-6 flex items-center gap-3">
-        <img src="/src/assets/m.svg" alt="User logo" className="w-8 lg:w-10" />
-        <h1 className="text-lg lg:text-xl font-semibold text-white tracking-wide">
+      <div className="flex flex-col items-center gap-2 py-4">
+        <img src="/src/assets/m.svg" alt="Logo" className="w-12 h-12" />
+        <h1 className="text-pink-600 font-extrabold text-lg tracking-wide">
           Ullas
         </h1>
       </div>
 
-      {/* Menu Items */}
-      <aside className="flex flex-col mt-6 lg:mt-10 w-full lg:space-y-3 space-y-1  justify-center ">
-        {menuItems.map((item, i) => {
-          const isActive =
-            location.pathname.toLowerCase() === item.link.toLowerCase();
+      <div className="border-t border-pink-100/50 my-4"></div>
+
+      {/* Menu items as card-style */}
+      <nav className="flex-1 flex flex-col gap-4">
+        {menuItems.map((item, index) => {
+          const active = location.pathname.toLowerCase() === item.link.toLowerCase();
           return (
             <Link
-              key={i}
+              key={index}
               to={item.link}
-              className={`ml-3 flex text-sm lg:text-lg items-center gap-3 w-[80%] lg:w-[85%] justify-start lg:px-5 lg:py-3
-                px-3 py-2
-                font-medium 
-                rounded-2xl border transition-all duration-300
-                ${
-                  isActive
-                    ? "bg-white text-violet-700 border-violet-400 shadow-md scale-105"
-                    : "text-white border-transparent hover:bg-violet-100 hover:text-violet-700 hover:border-violet-400"
-                }`}
+              onClick={toggleMenu}
+              className={`
+                relative flex items-center gap-3 p-4 rounded-3xl
+                transition-all duration-300
+                ${active
+                  ? "bg-gradient-to-br from-pink-400 to-fuchsia-500 text-white font-semibold shadow-lg"
+                  : "bg-white/70 hover:bg-gradient-to-br hover:from-pink-50/70 hover:via-pink-100/50 hover:to-white/60 text-gray-700 hover:text-pink-600 hover:shadow-md"}
+              `}
             >
+              {/* Accent vertical line */}
+              <span
+                className={`absolute left-0 top-0 h-full w-1 rounded-l-3xl
+                            ${active ? "bg-gradient-to-b from-pink-400 to-fuchsia-500" : "bg-pink-200/50"}`}
+              ></span>
+
               {item.icon}
-              <span>{item.label}</span>
+              <span className="text-lg">{item.label}</span>
             </Link>
           );
         })}
-      </aside>
+      </nav>
 
-      {/* Logout Button */}
-      <div className="mt-auto mb-6 w-full flex justify-center">
-        <button
-          className="w-[85%] py-3 rounded-2xl border border-violet-400/40 
-                     bg-white/10 text-white font-semibold text-base
-                     hover:bg-violet-100 hover:text-violet-700 hover:border-violet-400
-                     hover:shadow-lg hover:shadow-violet-200/40 hover:scale-105 
-                     transition-all duration-300"
-        >
-          Logout
-        </button>
-      </div>
+      <div className="border-t border-pink-100/50 my-4"></div>
+
+      {/* Logout */}
+      <button className="flex items-center justify-center gap-2 px-4 py-3 
+                         bg-white/70 text-pink-600 rounded-3xl 
+                         hover:bg-gradient-to-br hover:from-pink-50/70 hover:via-pink-100/50 hover:to-white/60
+                         hover:shadow-md transition-all text-lg font-medium">
+        <IoLogOutOutline size={16} />
+        Logout
+      </button>
     </div>
   );
-};
-
-export default Menu;
+}

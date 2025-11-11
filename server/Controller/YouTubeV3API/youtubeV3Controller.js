@@ -19,7 +19,7 @@ export const channelList = async (req, res) => {
 
  
     const statsRes = await axios.get(
-      `https://youtube.googleapis.com/youtube/v3/channels?part=snippet,statistics&id=${channelIds}&key=${process.env.YOUTUBE_V3_API_KEY}`
+      `https://youtube.googleapis.com/youtube/v3/channels?part=snippet,statistics&id=${channelIds}&maxResults=20&key=${process.env.YOUTUBE_V3_API_KEY}`
     );
 
     const channelStats = statsRes.data.items;
@@ -31,10 +31,10 @@ export const channelList = async (req, res) => {
       channelId: i.id,
       title: i.snippet.title,
       description: i.snippet.description,
-       logo:
-     i.snippet.thumbnails.high?.url ||
-     i.snippet.thumbnails.medium?.url ||
-     i.snippet.thumbnails.default?.url,
+      logo:
+      i.snippet.thumbnails.high?.url ||
+      i.snippet.thumbnails.medium?.url ||
+      i.snippet.thumbnails.default?.url,
       subscriberCount: i.statistics.subscriberCount,
       viewCount: i.statistics.viewCount,
       videoCount: i.statistics.videoCount,
@@ -48,3 +48,42 @@ export const channelList = async (req, res) => {
     return err(res, 500, "Something went wrong");
   }
 };
+
+export const channelStats=async(req,res)=>{
+
+try {
+  
+const {channelid}=req.params;
+
+if(!channelid) return err(res,500,"ChannelId required")
+
+const fetchChannelStats=await axios.get(
+      `https://youtube.googleapis.com/youtube/v3/channels?part=snippet,statistics&id=${channelid}&key=${process.env.YOUTUBE_V3_API_KEY}`
+    );
+
+    const channelStats = fetchChannelStats.data.items;
+    if (!channelStats || channelStats.length === 0)
+      return err(res, 404, "Statistics not found");
+
+const responseData={
+      channelId: i.id,
+      title: i.snippet.title,
+      description: i.snippet.description,
+       logo:
+     i.snippet.thumbnails.high?.url ||
+     i.snippet.thumbnails.medium?.url ||
+     i.snippet.thumbnails.default?.url,
+      subscriberCount: i.statistics.subscriberCount,
+      viewCount: i.statistics.viewCount,
+      videoCount: i.statistics.videoCount,
+    }
+
+console.log({ success: true, data: responseData });
+return res.json({success:true,data:responseData})
+
+} catch (error) {
+     console.error(error.message);
+    return err(res, 500, "Something went wrong");
+}
+
+}
